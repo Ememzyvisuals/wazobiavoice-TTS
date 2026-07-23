@@ -2,7 +2,7 @@
 
 Nigerian multilingual text-to-speech — **Yoruba, Hausa, Igbo, Nigerian Pidgin,
 and Nigerian-accented English** — with zero-shot voice cloning, built by
-[Axiveri]((https://huggingface.co/Axiveri/WazobiaVoice)), an African AI research initiative.
+[Axiveri]((https://huggingface.co/Axiveri)), an African AI research initiative.
 
 Model weights and card: [huggingface.co/Axiveri/WazobiaVoice](https://huggingface.co/Axiveri/WazobiaVoice)
 
