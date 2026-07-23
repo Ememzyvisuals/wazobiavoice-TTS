@@ -1,0 +1,50 @@
+[project]
+name = "wazobiavoice-tts"
+version = "0.1.0"
+description = "WazobiaVoice: Nigerian multilingual TTS (Yoruba, Hausa, Igbo, Nigerian Pidgin, English) by Axiveri"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Axiveri", email = "ememzyvisuals@gmail.com"}
+]
+# NOTE: these are listed for packaging metadata / reference. Installing via
+# `pip install .` resolves them all in one shot, which is known to fail on
+# deepfilternet and torchmetrics (resolver backtracking into years-old,
+# incompatible releases -- see scripts/install.sh for the full explanation).
+# Use `bash scripts/install.sh` for a install that's actually confirmed to
+# work end-to-end.
+dependencies = [
+    "numpy>=2.0",
+    "torch>=2.1",
+    "torchaudio>=2.1",
+    "datasets>=2.19,<3.0",
+    "huggingface_hub>=0.30",
+    "transformers>=4.45,<5.1",
+    "safetensors>=0.4.1",
+    "torchmetrics[audio]>=1.4",
+    "librosa>=0.10",
+    "s3tokenizer",
+    "einops",
+    "soundfile",
+    "omegaconf",
+    "resemble-perth",
+    "conformer==0.3.2",
+    "onnxruntime",
+    "pyloudnorm",
+    "appdirs>=1.4,<2.0",
+    "loguru>=0.5",
+    "deepfilterlib==0.5.6",
+    "deepfilternet==0.5.6",
+]
+
+[project.urls]
+Homepage = "https://github.com/Ememzyvisuals/wazobiavoice-TTS"
+Repository = "https://github.com/Ememzyvisuals/wazobiavoice-TTS"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
