@@ -247,16 +247,26 @@ class WazobiaVoiceMultilingualTTS:
             device = "cpu"
 
         t3_model = _resolve_multilingual_t3_model(t3_model)
+        # NOTE: all checkpoint files in Axiveri/WazobiaVoice live under the
+        # merged_model/ subfolder, not at repo root -- allow_patterns must
+        # carry that prefix or snapshot_download silently matches 0 files.
         ckpt_dir = Path(
             snapshot_download(
                 repo_id=REPO_ID,
                 repo_type="model",
                 revision="main",
-                allow_patterns=["ve.pt", t3_model, "s3gen.pt", "grapheme_mtl_merged_expanded_v1.json", "conds.pt", "Cangjie5_TC.json"],
+                allow_patterns=[
+                    "merged_model/ve.pt",
+                    f"merged_model/{t3_model}",
+                    "merged_model/s3gen.pt",
+                    "merged_model/grapheme_mtl_merged_expanded_v1.json",
+                    "merged_model/conds.pt",
+                    "merged_model/Cangjie5_TC.json",
+                ],
                 token=os.getenv("HF_TOKEN"),
             )
         )
-        return cls.from_local(ckpt_dir, device, t3_model=t3_model)
+        return cls.from_local(ckpt_dir / "merged_model", device, t3_model=t3_model)
     
     def prepare_conditionals(self, wav_fpath, exaggeration=0.5):
         ## Load reference wav
@@ -361,3 +371,4 @@ class WazobiaVoiceMultilingualTTS:
 
             watermarked_wav = self.watermarker.apply_watermark(wav, sample_rate=self.sr)
         return torch.from_numpy(watermarked_wav).unsqueeze(0)
+    
