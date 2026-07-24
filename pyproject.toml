@@ -15,7 +15,7 @@ authors = [
 # Use `bash scripts/install.sh` for a install that's actually confirmed to
 # work end-to-end.
 dependencies = [
-    "numpy>=2.0",
+   "numpy>=1.22,<2.0",
     "torch>=2.1",
     "torchaudio>=2.1",
     "datasets>=2.19,<3.0",
