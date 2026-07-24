@@ -182,6 +182,18 @@ class WazobiaVoiceMultilingualTTS:
         self.conds = conds
         self.watermarker = perth.PerthImplicitWatermarker()
 
+    def to(self, device):
+        """Move all submodules (and cached voice conditionals, if any) to
+        `device`. Needed for the ZeroGPU pattern of loading on CPU at
+        startup and moving to CUDA per-request inside a @spaces.GPU call."""
+        self.device = device
+        self.t3.to(device)
+        self.s3gen.to(device)
+        self.ve.to(device)
+        if self.conds is not None:
+            self.conds = self.conds.to(device)
+        return self
+
     @classmethod
     def get_supported_languages(cls):
         """Return dictionary of supported language codes and names."""
@@ -371,4 +383,3 @@ class WazobiaVoiceMultilingualTTS:
 
             watermarked_wav = self.watermarker.apply_watermark(wav, sample_rate=self.sr)
         return torch.from_numpy(watermarked_wav).unsqueeze(0)
-    
